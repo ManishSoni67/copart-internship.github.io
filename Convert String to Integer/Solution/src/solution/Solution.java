@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package solution;
 
-import java.util.Scanner;
+package solution;
+import java.io.File;
+import net.sourceforge.tess4j.*;
+
 
 /**
  *
@@ -18,24 +20,16 @@ public class Solution {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-    Scanner sc = new Scanner(System.in);
-    
-    String str = sc.nextLine();
-	int i =0;
-    int result =0;
-    boolean  neg = false;
-    if(str.charAt(0)=='-')
-    {
-      neg=true;
-      i=1;
-    }
-	while(i<str.length())
-    {
-      result*=10;
-      result += str.charAt(i++)-'0';
-    }
-  	result = (neg?-result:result);
-	System.out.println(result);
+        File imageFile = new File("Texas Title.jpeg");
+        ITesseract instance = new Tesseract();  // JNA Interface Mapping
+        // ITesseract instance = new Tesseract1(); // JNA Direct Mapping
+
+        try {
+            String result = instance.doOCR(imageFile);
+            System.out.println(result);
+        } catch (TesseractException e) {
+            System.err.println(e.getMessage());
+        }
     }
     
 }
